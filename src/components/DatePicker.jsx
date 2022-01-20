@@ -1,12 +1,6 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const DatePicker = () => {
-  const [date, setDate] = useState('');
-
-  const handleChange = (e) => {
-    setDate(() => e.target.value);
-  };
-
+const DatePicker = ({ date, updateDate }) => {
   return (
     <div className="date-picker-container">
       <label htmlFor="date-picker" className="date-picker-label">
@@ -17,10 +11,15 @@ const DatePicker = () => {
         id="date-picker"
         name="date-picker"
         value={date}
-        onChange={handleChange}
+        onChange={(e) => updateDate(e.target.value)}
       />
     </div>
   );
+};
+
+DatePicker.propTypes = {
+  date: PropTypes.string,
+  updateDate: PropTypes.func,
 };
 
 export default DatePicker;
