@@ -12,7 +12,7 @@ const useFetch = (url, options, dependency, filterFunc) => {
         const response = await fetch(url, options);
         const responseJson = await response.json();
         if (response.status === 400) {
-          throw responseJson.msg;
+          throw { msg: responseJson.msg };
         } else {
           setError(null);
         }
