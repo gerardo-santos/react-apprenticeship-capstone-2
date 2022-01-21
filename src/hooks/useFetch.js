@@ -21,7 +21,6 @@ const useFetch = (url, options, dependency, filterFunc) => {
       } catch (error) {
         setError(error);
         setLoading(false);
-        console.log(9999);
       }
     };
     fetchData();

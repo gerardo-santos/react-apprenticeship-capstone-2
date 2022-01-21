@@ -7,14 +7,17 @@ import { apodUrl } from './utils/constants';
 import { useState } from 'react';
 
 const App = () => {
-  const dateObject = new Date();
-  const isoDate = dateObject.toISOString().split('T')[0];
-  const [date, setDate] = useState(() => isoDate);
+  const [date, setDate] = useState(() => {
+    const dateObject = new Date();
+    const isoDate = dateObject.toISOString().split('T')[0];
+    return isoDate;
+  });
+  const [search, setSearch] = useState('');
   const { loading, error, data } = useFetch(
     // eslint-disable-next-line no-undef
     `${apodUrl}?date=${date}&api_key=${process.env.REACT_APP_API_KEY}`,
     {},
-    date,
+    search,
     null
   );
 
@@ -26,10 +29,18 @@ const App = () => {
     setDate(() => newDate);
   };
 
+  const updateSearch = (newSearch) => {
+    setSearch(() => newSearch);
+  };
+
   return (
     <>
       <Title />
-      <DatePicker date={date} updateDate={updateDate} />
+      <DatePicker
+        date={date}
+        updateDate={updateDate}
+        updateSearch={updateSearch}
+      />
       {loading ? <Spinner /> : <PictureInformation pictureData={data} />}
     </>
   );
