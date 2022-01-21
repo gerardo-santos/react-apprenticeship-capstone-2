@@ -1,6 +1,7 @@
 import Title from './components/Title';
 import DatePicker from './components/DatePicker';
 import Spinner from './components/Spinner';
+import ErrorAlert from './components/ErrorAlert';
 import PictureInformation from './components/PictureInformation';
 import useFetch from './hooks/useFetch';
 import { apodUrl } from './utils/constants';
@@ -21,10 +22,6 @@ const App = () => {
     null
   );
 
-  if (error) {
-    return <h3>There was an error, please try again.</h3>;
-  }
-
   const updateDate = (newDate) => {
     setDate(() => newDate);
   };
@@ -41,7 +38,13 @@ const App = () => {
         updateDate={updateDate}
         updateSearch={updateSearch}
       />
-      {loading ? <Spinner /> : <PictureInformation pictureData={data} />}
+      {loading ? (
+        <Spinner />
+      ) : error ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <PictureInformation pictureData={data} />
+      )}
     </>
   );
 };

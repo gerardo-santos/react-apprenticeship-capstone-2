@@ -10,7 +10,7 @@ const PictureInformation = ({ pictureData }) => {
       ) : (
         <VideoEmbed videoUrl={pictureData.url} />
       )}
-      <p>Date: {pictureData.date}</p>
+      <p>{pictureData.date}</p>
       <p className="picture-explanation">{pictureData.explanation}</p>
       {pictureData.copyright && (
         <p>Credit & copyright: {pictureData.copyright}</p>
