@@ -19,7 +19,7 @@ const App = () => {
   );
 
   if (error) {
-    return <h3>There was an error.</h3>;
+    return <h3>There was an error, please try again.</h3>;
   }
 
   const updateDate = (newDate) => {
