@@ -1,11 +1,11 @@
 import Title from './components/Title';
 import DatePicker from './components/DatePicker';
 import Spinner from './components/Spinner';
-import ErrorAlert from './components/ErrorAlert';
 import PictureInformation from './components/PictureInformation';
 import useFetch from './hooks/useFetch';
 import { apodUrl } from './utils/constants';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { debounce } from './utils/functions';
 
 const App = () => {
   const [date, setDate] = useState(() => {
@@ -14,6 +14,7 @@ const App = () => {
     return isoDate;
   });
   const [search, setSearch] = useState('');
+
   const { loading, error, data } = useFetch(
     // eslint-disable-next-line no-undef
     `${apodUrl}?date=${date}&api_key=${process.env.REACT_APP_API_KEY}`,
@@ -22,28 +23,25 @@ const App = () => {
     null
   );
 
-  const updateDate = (newDate) => {
-    setDate(() => newDate);
-  };
+  const debouncedFilterHandler = useRef(debounce(updateSearch, 500)).current;
 
-  const updateSearch = (newSearch) => {
-    setSearch(() => newSearch);
+  function updateSearch(newDate) {
+    setSearch(() => newDate);
+  }
+
+  const debounceOnChange = (newDate) => {
+    setDate(() => newDate);
+    debouncedFilterHandler(newDate);
   };
 
   return (
     <>
       <Title />
-      <DatePicker
-        date={date}
-        updateDate={updateDate}
-        updateSearch={updateSearch}
-      />
+      <DatePicker date={date} debounceOnChange={debounceOnChange} />
       {loading ? (
         <Spinner />
-      ) : error ? (
-        <ErrorAlert error={error} />
       ) : (
-        <PictureInformation pictureData={data} />
+        <PictureInformation pictureData={data} error={error} />
       )}
     </>
   );
