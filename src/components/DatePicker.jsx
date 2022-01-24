@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types';
 
-const DatePicker = ({ date, updateDate, updateSearch }) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateSearch(() => date);
-  };
+const DatePicker = ({ date, debounceOnChange }) => {
   return (
-    <form className="date-picker-container" onSubmit={handleSubmit}>
+    <form className="date-picker-container">
       <label htmlFor="date-picker" className="date-picker-label">
         Please select a date
       </label>
@@ -16,11 +12,8 @@ const DatePicker = ({ date, updateDate, updateSearch }) => {
           id="date-picker"
           name="date-picker"
           value={date}
-          onChange={(e) => updateDate(e.target.value)}
+          onChange={(e) => debounceOnChange(e.target.value)}
         />
-        <button type="submit" className="search-btn">
-          Show
-        </button>
       </div>
     </form>
   );
@@ -28,8 +21,7 @@ const DatePicker = ({ date, updateDate, updateSearch }) => {
 
 DatePicker.propTypes = {
   date: PropTypes.string,
-  updateDate: PropTypes.func,
-  updateSearch: PropTypes.func,
+  debounceOnChange: PropTypes.func,
 };
 
 export default DatePicker;
