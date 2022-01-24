@@ -9,6 +9,7 @@ const DatePicker = ({ date, debounceOnChange }) => {
       <div>
         <input
           type="date"
+          title="date"
           id="date-picker"
           name="date-picker"
           value={date}

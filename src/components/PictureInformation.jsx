@@ -17,8 +17,10 @@ const PictureInformation = ({ pictureData, error }) => {
             )}
           </div>
           <div className="description-container">
-            <p>{pictureData.date}</p>
-            <p className="picture-explanation">{pictureData.explanation}</p>
+            <p title="pic-date">{pictureData.date}</p>
+            <p className="picture-explanation" title="explanation">
+              {pictureData.explanation}
+            </p>
             {pictureData.copyright && (
               <p>Credit & copyright: {pictureData.copyright}</p>
             )}
